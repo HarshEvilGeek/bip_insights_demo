@@ -1,20 +1,21 @@
 # Un-hide and use this explore, or copy the joins into another explore, to get all the fully nested relationships from this view
-# explore: customer_dummy_data {
+explore: customer_dummy_data_1 {
+  view_name: customer_dummy_data
+  join: customer_dummy_data__product {
+    view_label: "Customer Dummy Data: Product"
+    sql: LEFT JOIN UNNEST(${customer_dummy_data.product}) as customer_dummy_data__product ;;
+    relationship: one_to_many
+  }
 
-#   join: customer_dummy_data__product {
-#     view_label: "Customer Dummy Data: Product"
-#     sql: LEFT JOIN UNNEST(${customer_dummy_data.product}) as customer_dummy_data__product ;;
-#     relationship: one_to_many
-#   }
+  join: customer_dummy_data__taxonomy_nodes {
+    view_label: "Customer Dummy Data: Taxonomy Nodes"
+    sql: LEFT JOIN UNNEST(${customer_dummy_data.taxonomy_nodes}) as customer_dummy_data__taxonomy_nodes ;;
+    relationship: one_to_many
+  }
+}
 
-#   join: customer_dummy_data__taxonomy_nodes {
-#     view_label: "Customer Dummy Data: Taxonomy Nodes"
-#     sql: LEFT JOIN UNNEST(${customer_dummy_data.taxonomy_nodes}) as customer_dummy_data__taxonomy_nodes ;;
-#     relationship: one_to_many
-#   }
-# }
-
-explore: customer_dummy_data {
+explore: customer_daily_active_users {
+  view_name: customer_dummy_data
   fields: [customer_dummy_data.gaia_id, customer_dummy_data.activity_timestamp]
   join: customer_B {
     from: customer_dummy_data
