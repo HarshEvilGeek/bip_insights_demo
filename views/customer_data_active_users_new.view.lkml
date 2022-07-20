@@ -1,3 +1,6 @@
+# Un-hide and use this explore, or copy the joins into another explore, to get all the fully nested relationships from this view
+explore: customer_daily_active_users_new {
+}
 
 view: customer_daily_active_users_new  {
   derived_table: {
