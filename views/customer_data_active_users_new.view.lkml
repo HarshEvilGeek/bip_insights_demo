@@ -27,4 +27,19 @@ view: customer_daily_active_users_new  {
           1, 2
           ;;
   }
+  dimension: date_range_activity {
+    type: date
+    datatype: date
+    sql: ${TABLE}.date_range_activity ;;
+  }
+
+  dimension: customer_dummy_data_gaia_id {
+    type: number
+    sql: ${TABLE}.customer_dummy_data_gaia_id ;;
+  }
+
+  dimension: total_times_active_in_range {
+    type: number
+    sql: ${TABLE}.total_times_active_in_range ;;
+  }
 }
