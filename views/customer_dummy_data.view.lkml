@@ -21,7 +21,7 @@ explore: customer_daily_active_users {
     from: customer_dummy_data
     type: left_outer
     relationship: one_to_many
-    sql_on: DATE_DIFF(DATE(TIMESTAMP_MICROS(${customer_dummy_data.activity_timestamp})), DATE(TIMESTAMP_MICROS(${customer_B.activity_timestamp})), DAY)<2 AND DATE_DIFF(DATE(TIMESTAMP_MICROS(${customer_dummy_data.activity_timestamp})), DATE(TIMESTAMP_MICROS(${customer_B.activity_timestamp})), DAY)>0 ;;
+    sql_on: DATE_DIFF(${customer_dummy_data.activity_timestamp},${customer_B.activity_timestamp}, DAY)<2 AND DATE_DIFF(${customer_dummy_data.activity_timestamp}, ${customer_B.activity_timestamp}, DAY)>0 ;;
   }
 }
 
@@ -40,22 +40,22 @@ view: customer_dummy_data {
 
   dimension: activity_timestamp {
     type: number
-    sql: ${TABLE}.activity_timestamp ;;
+    sql: DATE(TIMESTAMP_MICROS(${TABLE}.activity_timestamp)) ;;
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_activity_timestamp {
-    type: sum
-    sql: ${activity_timestamp} ;;
-  }
+  # measure: total_activity_timestamp {
+  #   type: sum
+  #   sql: ${activity_timestamp} ;;
+  # }
 
-  measure: average_activity_timestamp {
-    type: average
-    sql: ${activity_timestamp} ;;
-  }
+  # measure: average_activity_timestamp {
+  #   type: average
+  #   sql: ${activity_timestamp} ;;
+  # }
 
   dimension: form_factor {
     type: string
@@ -142,13 +142,13 @@ view: customer_dummy_data__taxonomy_nodes {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_customer_dummy_data__taxonomy_nodes {
-    type: sum
-    sql: ${customer_dummy_data__taxonomy_nodes} ;;
-  }
+  # measure: total_customer_dummy_data__taxonomy_nodes {
+  #   type: sum
+  #   sql: ${customer_dummy_data__taxonomy_nodes} ;;
+  # }
 
-  measure: average_customer_dummy_data__taxonomy_nodes {
-    type: average
-    sql: ${customer_dummy_data__taxonomy_nodes} ;;
-  }
+  # measure: average_customer_dummy_data__taxonomy_nodes {
+  #   type: average
+  #   sql: ${customer_dummy_data__taxonomy_nodes} ;;
+  # }
 }
