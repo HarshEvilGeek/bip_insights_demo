@@ -45,6 +45,7 @@ view: customer_dummy_data {
 
   dimension: activity_date {
     type: date_time
+    datatype: date
     sql:  DATE(TIMESTAMP_MICROS(${activity_timestamp})) ;;
   }
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
