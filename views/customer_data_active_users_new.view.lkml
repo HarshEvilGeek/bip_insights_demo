@@ -40,14 +40,9 @@ view: customer_daily_active_users_new  {
     sql: ${TABLE}.date_range_activity ;;
   }
 
-  dimension: customer_dummy_data_gaia_id {
+  dimension: DAU_FLAG {
     type: number
-    sql: ${TABLE}.customer_dummy_data_gaia_id ;;
+    sql: ${TABLE}.DAU_FLAG ;;
   }
 
-  dimension: other_dates_joined {
-    type: date
-    datatype: date
-    sql: ${TABLE}.other_dates_joined ;;
-  }
 }
