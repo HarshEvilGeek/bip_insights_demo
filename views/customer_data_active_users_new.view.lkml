@@ -23,11 +23,12 @@ view: customer_daily_active_users_new  {
       SELECT  B.gaia_id, B.activity_timestamp
       FROM
       `bip-insights.looker_poc.CustomerDummyData` AS B
+      WHERE DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)) IS NOT NULL
       GROUP BY 1, 2
       )
            AS customer_dummy_data
-      ON DATE_DIFF(customer_date.dates_for_calc, DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)), DAY)<2 AND DATE_DIFF(customer_date.dates_for_calc, DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)), DAY)>=0
-      WHERE DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)) IS NOT NULL
+      ON (DATE_DIFF(customer_date.dates_for_calc, DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)), DAY)<2) AND (DATE_DIFF(customer_date.dates_for_calc, DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)), DAY)>=0)
+      WHERE customer_dummy_data.gaia_id IS NOT NULL
       GROUP BY
           1, 2
           ;;
