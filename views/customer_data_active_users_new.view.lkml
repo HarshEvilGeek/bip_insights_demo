@@ -10,9 +10,9 @@ view: customer_daily_active_users_new  {
           count(*) as total_times_active_in_range
       FROM
       (SELECT
-        DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)) as dates_for_calc
+        DATE(TIMESTAMP_MICROS(A.activity_timestamp)) as dates_for_calc
       FROM
-        `bip-insights.looker_poc.CustomerDummyData` as customer_dummy_data
+        `bip-insights.looker_poc.CustomerDummyData` as A
       GROUP BY 1
       HAVING dates_for_calc IS NOT NULL
       ORDER BY 1 DESC
@@ -20,9 +20,9 @@ view: customer_daily_active_users_new  {
       ) AS customer_date
       LEFT JOIN
       (
-      SELECT  customer_dummy_data.gaia_id, customer_dummy_data.activity_timestamp
+      SELECT  B.gaia_id, B.activity_timestamp
       FROM
-      `bip-insights.looker_poc.CustomerDummyData`
+      `bip-insights.looker_poc.CustomerDummyData` AS B
       GROUP BY 1, 2
       )
            AS customer_dummy_data
