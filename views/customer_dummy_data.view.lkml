@@ -40,7 +40,7 @@ view: customer_dummy_data {
 
   dimension: activity_timestamp {
     type: number
-    sql: ${TABLE}.activity_timestamp)) ;;
+    sql: ${TABLE}.activity_timestamp ;;
   }
 
   dimension: activity_date {
