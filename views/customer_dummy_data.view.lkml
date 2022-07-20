@@ -1,17 +1,26 @@
 # Un-hide and use this explore, or copy the joins into another explore, to get all the fully nested relationships from this view
+# explore: customer_dummy_data {
+
+#   join: customer_dummy_data__product {
+#     view_label: "Customer Dummy Data: Product"
+#     sql: LEFT JOIN UNNEST(${customer_dummy_data.product}) as customer_dummy_data__product ;;
+#     relationship: one_to_many
+#   }
+
+#   join: customer_dummy_data__taxonomy_nodes {
+#     view_label: "Customer Dummy Data: Taxonomy Nodes"
+#     sql: LEFT JOIN UNNEST(${customer_dummy_data.taxonomy_nodes}) as customer_dummy_data__taxonomy_nodes ;;
+#     relationship: one_to_many
+#   }
+# }
+
 explore: customer_dummy_data {
-  hidden: yes
-
-  join: customer_dummy_data__product {
-    view_label: "Customer Dummy Data: Product"
-    sql: LEFT JOIN UNNEST(${customer_dummy_data.product}) as customer_dummy_data__product ;;
+  fields: [customer_dummy_data.gaia_id, customer_dummy_data.activity_timestamp]
+  join: customer_B {
+    from: customer_dummy_data
+    type: left_outer
     relationship: one_to_many
-  }
-
-  join: customer_dummy_data__taxonomy_nodes {
-    view_label: "Customer Dummy Data: Taxonomy Nodes"
-    sql: LEFT JOIN UNNEST(${customer_dummy_data.taxonomy_nodes}) as customer_dummy_data__taxonomy_nodes ;;
-    relationship: one_to_many
+    sql_on: DATE_DIFF(DATE(TIMESTAMP_MICROS(${customer_dummy_data.activity_timestamp})), DATE(TIMESTAMP_MICROS(${customer_B.activity_timestamp})), DAY)<2 AND DATE_DIFF(DATE(TIMESTAMP_MICROS(${customer_dummy_data.activity_timestamp})), DATE(TIMESTAMP_MICROS(${customer_B.activity_timestamp})), DAY)>0 ;;
   }
 }
 
@@ -81,7 +90,6 @@ view: customer_dummy_data {
   # If you want this field to be displayed, remove "hidden: yes".
 
   dimension: product {
-    hidden: yes
     sql: ${TABLE}.product ;;
   }
 
@@ -91,7 +99,6 @@ view: customer_dummy_data {
   }
 
   dimension: taxonomy_nodes {
-    hidden: yes
     sql: ${TABLE}.taxonomy_nodes ;;
   }
 
