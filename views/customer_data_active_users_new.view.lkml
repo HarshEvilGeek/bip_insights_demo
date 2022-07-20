@@ -45,7 +45,7 @@ view: customer_daily_active_users_new  {
   }
 
   dimension: other_dates_joined {
-    type: number
+    type: date
     sql: ${TABLE}.other_dates_joined ;;
   }
 }
