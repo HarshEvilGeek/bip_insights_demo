@@ -16,12 +16,12 @@ explore: customer_dummy_data_1 {
 
 explore: customer_daily_active_users {
   view_name: customer_dummy_data
-  fields: [customer_dummy_data.gaia_id, customer_dummy_data.activity_timestamp]
+  fields: [customer_dummy_data.gaia_id, customer_dummy_data.activity_date]
   join: customer_B {
     from: customer_dummy_data
     type: left_outer
     relationship: one_to_many
-    sql_on: DATE_DIFF(${customer_dummy_data.activity_timestamp},${customer_B.activity_timestamp}, DAY)<2 AND DATE_DIFF(${customer_dummy_data.activity_timestamp}, ${customer_B.activity_timestamp}, DAY)>0 ;;
+    sql_on: DATE_DIFF(${customer_dummy_data.activity_date},${customer_B.activity_date}, DAY)<2 AND DATE_DIFF(${customer_dummy_data.activity_date}, ${customer_B.activity_date}, DAY)>0 ;;
   }
 }
 
@@ -40,9 +40,13 @@ view: customer_dummy_data {
 
   dimension: activity_timestamp {
     type: number
-    sql: DATE(TIMESTAMP_MICROS(${TABLE}.activity_timestamp)) ;;
+    sql: ${TABLE}.activity_timestamp)) ;;
   }
 
+  dimension: activity_date {
+    type: date
+    sql:  DATE(TIMESTAMP_MICROS(${activity_timestamp})) ;;
+  }
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
