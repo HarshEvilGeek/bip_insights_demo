@@ -21,7 +21,7 @@ explore: customer_daily_active_users {
     from: customer_dummy_data
     type: inner
     relationship: one_to_many
-    sql_on: DATE_DIFF(${customer_dummy_data.activity_date},${customer_B.activity_date}, DAY)<2 AND DATE_DIFF(${customer_dummy_data.activity_date}, ${customer_B.activity_date}, DAY)>=0 ;;
+    sql_on: DATE_DIFF(${customer_dummy_data.activity_date},${customer_B.activity_date}, DAY)<2 AND DATE_DIFF(${customer_dummy_data.activity_date}, ${customer_B.activity_date}, DAY)>=0 AND ${customer_B.gaia_id}=${customer_dummy_data.gaia_id};;
   }
 }
 
