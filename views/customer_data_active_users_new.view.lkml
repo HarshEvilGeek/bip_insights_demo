@@ -44,8 +44,8 @@ view: customer_daily_active_users_new  {
     sql: ${TABLE}.customer_dummy_data_gaia_id ;;
   }
 
-  dimension: total_times_active_in_range {
+  dimension: other_dates_joined {
     type: number
-    sql: ${TABLE}.total_times_active_in_range ;;
+    sql: ${TABLE}.other_dates_joined ;;
   }
 }
