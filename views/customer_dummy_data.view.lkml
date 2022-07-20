@@ -44,7 +44,7 @@ view: customer_dummy_data {
   }
 
   dimension: activity_date {
-    type: date_time
+    type: date
     datatype: date
     sql:  DATE(TIMESTAMP_MICROS(${activity_timestamp})) ;;
   }
