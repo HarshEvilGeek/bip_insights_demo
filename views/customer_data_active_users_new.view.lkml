@@ -7,7 +7,7 @@ view: customer_daily_active_users_new  {
     sql: SELECT
           customer_date.dates_for_calc as date_range_activity,
           customer_dummy_data.gaia_id as customer_dummy_data_gaia_id,
-          count(*) as total_times_active_in_range
+          DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)) as other_dates_joined
       FROM
       (SELECT
         DATE(TIMESTAMP_MICROS(A.activity_timestamp)) as dates_for_calc
@@ -30,7 +30,7 @@ view: customer_daily_active_users_new  {
       ON (DATE_DIFF(customer_date.dates_for_calc, DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)), DAY)<2) AND (DATE_DIFF(customer_date.dates_for_calc, DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)), DAY)>=0)
       WHERE customer_dummy_data.gaia_id IS NOT NULL
       GROUP BY
-          1, 2
+          1, 2, 3
           ;;
   }
   dimension: date_range_activity {
