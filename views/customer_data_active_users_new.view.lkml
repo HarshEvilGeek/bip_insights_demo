@@ -7,11 +7,11 @@ view: customer_daily_active_users_new  {
     sql: SELECT
           customer_date.dates_for_calc as date_range_activity,
           customer_dummy_data.product as product,
-          CASE
+          SUM(CASE
           WHEN customer_dummy_data.gaia_id IS NOT NULL
           THEN 1
           ELSE 0
-          END AS DAU_FLAG
+          END) AS DAU_SUM
       FROM
       (SELECT
         DATE(TIMESTAMP_MICROS(A.activity_timestamp)) as dates_for_calc
@@ -32,7 +32,7 @@ view: customer_daily_active_users_new  {
       ) AS customer_dummy_data
       ON (DATE_DIFF(customer_date.dates_for_calc, DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)), DAY)<2) AND (DATE_DIFF(customer_date.dates_for_calc, DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)), DAY)>=0)
       GROUP BY
-          1, customer_dummy_data.product, customer_dummy_data.gaia_id
+          1, customer_dummy_data.product
           ;;
   }
   dimension: date_range_activity {
