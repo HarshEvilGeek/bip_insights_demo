@@ -46,9 +46,9 @@ view: customer_daily_active_users_new  {
     sql: ${TABLE}.product ;;
   }
 
-  dimension: DAU_FLAG {
+  dimension: DAU_SUM {
     type: number
-    sql: ${TABLE}.DAU_FLAG ;;
+    sql: ${TABLE}.DAU_SUM ;;
   }
 
 }
