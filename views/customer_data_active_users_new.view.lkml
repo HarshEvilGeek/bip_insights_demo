@@ -38,6 +38,7 @@ view: customer_daily_active_users_new  {
   dimension: date_range_activity {
     type: date
     datatype: date
+    drill_fields: [gaia_id, date_range_activity]
     sql: ${TABLE}.date_range_activity ;;
   }
 
