@@ -14,11 +14,11 @@ view: customer_daily_active_users_new  {
           customer_date.dates_for_calc as date_range_activity,
           customer_dummy_data.product as product,
           customer_dummy_data.gaia_id,
-          CASE
+          SUM(CASE
           WHEN customer_dummy_data.gaia_id IS NOT NULL
           THEN 1
           ELSE 0
-          END as DAU_FLAG
+          END) as DAU_SUM
       FROM
       (SELECT
         DATE(TIMESTAMP_MICROS(A.activity_timestamp)) as dates_for_calc
