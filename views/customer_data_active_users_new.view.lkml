@@ -13,12 +13,7 @@ view: customer_daily_active_users_new  {
     sql: SELECT
           customer_date.dates_for_calc as date_range_activity,
           customer_dummy_data.product as product,
-          customer_dummy_data.gaia_id,
-          CASE
-          WHEN customer_dummy_data.gaia_id IS NOT NULL
-          THEN 1
-          ELSE 0
-          END as DAU_FLAG
+          customer_dummy_data.gaia_id
       FROM
       (SELECT
         DATE(TIMESTAMP_MICROS(A.activity_timestamp)) as dates_for_calc
@@ -57,11 +52,6 @@ view: customer_daily_active_users_new  {
     type: number
     # drill_fields: []
     sql: ${TABLE}.gaia_id ;;
-  }
-
-  dimension: DAU_FLAG {
-    type: number
-    sql: ${TABLE}.DAU_FLAG ;;
   }
 
 }
