@@ -33,8 +33,6 @@ view: customer_daily_active_users_new  {
       GROUP BY 1, 2 , 3
       ) AS customer_dummy_data
       ON (DATE_DIFF(customer_date.dates_for_calc, DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)), DAY)<7) AND (DATE_DIFF(customer_date.dates_for_calc, DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)), DAY)>=0)
-      GROUP BY
-          1, 2, 3
           ;;
   }
   dimension: date_range_activity {
