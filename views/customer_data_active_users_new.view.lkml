@@ -1,5 +1,11 @@
+include: "/views/user_id_map.view"
 # Un-hide and use this explore, or copy the joins into another explore, to get all the fully nested relationships from this view
 explore: customer_daily_active_users_new {
+  join: user_id_map {
+    type: inner
+    relationship: one_to_one
+    sql_on: ${user_id_map.gaia_id} = ${customer_daily_active_users_new.gaia_id} ;;
+  }
 }
 
 view: customer_daily_active_users_new  {
@@ -7,11 +13,12 @@ view: customer_daily_active_users_new  {
     sql: SELECT
           customer_date.dates_for_calc as date_range_activity,
           customer_dummy_data.product as product,
-          SUM(CASE
+          customer_dummy_data.gaia_id,
+          CASE
           WHEN customer_dummy_data.gaia_id IS NOT NULL
           THEN 1
           ELSE 0
-          END) AS DAU_SUM
+          END as DAU_FLAG
       FROM
       (SELECT
         DATE(TIMESTAMP_MICROS(A.activity_timestamp)) as dates_for_calc
@@ -32,7 +39,7 @@ view: customer_daily_active_users_new  {
       ) AS customer_dummy_data
       ON (DATE_DIFF(customer_date.dates_for_calc, DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)), DAY)<2) AND (DATE_DIFF(customer_date.dates_for_calc, DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)), DAY)>=0)
       GROUP BY
-          1, customer_dummy_data.product
+          1, 2, 3
           ;;
   }
   dimension: date_range_activity {
@@ -46,9 +53,15 @@ view: customer_daily_active_users_new  {
     sql: ${TABLE}.product ;;
   }
 
-  dimension: DAU_SUM {
+  dimension: gaia_id {
     type: number
-    sql: ${TABLE}.DAU_SUM ;;
+    # drill_fields: []
+    sql: ${TABLE}.gaia_id ;;
+  }
+
+  dimension: DAU_FLAG {
+    type: number
+    sql: ${TABLE}.DAU_FLAG ;;
   }
 
 }
