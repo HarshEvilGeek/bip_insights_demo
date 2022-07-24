@@ -40,7 +40,7 @@ view: customer_daily_active_users_new  {
     datatype: date
     link: {
       label: "Drill into this day ({{ date_range_activity }})"
-      url: "https://instance_name.looker.com/explore/bip_insights_demo/customer_daily_active_users_new?fields=customer_daily_active_users_new.gaia_id&f[customer_daily_active_users_new.date_range_activity]={{ value }}"
+      url: "/explore/bip_insights_demo/customer_daily_active_users_new?fields=customer_daily_active_users_new.gaia_id&f[customer_daily_active_users_new.date_range_activity]={{ value }}"
       # url: “/explore/events_by_hour_drilldown/events_day?fields=events_day.created_date,events_day.average_per_hour,events_day.max_per_hour&f[events_day.created_month]={{ created_month | url_encode }}%20for%201%20month”
     }
     sql: ${TABLE}.date_range_activity ;;
