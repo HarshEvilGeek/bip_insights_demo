@@ -72,7 +72,6 @@
     ui_config:
       type: button_toggles
       display: inline
-      html: Hello
     model: workinsights
     explore: customer_daily_active_users_new
     listens_to_filters: []
