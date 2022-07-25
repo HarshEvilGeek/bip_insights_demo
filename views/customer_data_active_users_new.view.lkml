@@ -3,7 +3,7 @@ include: "/views/user_id_map.view"
 explore: customer_daily_active_users_new {
   join: user_id_map {
     type: inner
-    relationship: one_to_one
+    relationship: many_to_one
     sql_on: ${user_id_map.gaia_id} = ${customer_daily_active_users_new.gaia_id} ;;
   }
 }
@@ -12,7 +12,7 @@ explore: customer_daily_active_users_drill_down {
   view_name: customer_daily_active_users_new
   join: user_id_map {
     type: inner
-    relationship: one_to_one
+    relationship: many_to_one
     sql_on: ${user_id_map.gaia_id} = ${customer_daily_active_users_new.gaia_id} ;;
   }
 }
