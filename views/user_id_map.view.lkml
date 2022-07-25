@@ -12,7 +12,6 @@ view: user_id_map {
   # This dimension will be called "Country Code" in Explore.
 
   dimension: country_code {
-    type: string
     map_layer_name: us_states
     sql: ${TABLE}.country_code ;;
   }
