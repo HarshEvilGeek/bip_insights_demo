@@ -22,7 +22,9 @@ view: customer_daily_active_users_new  {
     sql: SELECT
           customer_date.dates_for_calc as date_range_activity,
           customer_dummy_data.product as product,
-          customer_dummy_data.gaia_id
+          customer_dummy_data.gaia_id as gaia_id,
+          user_ou_map.country_code as country_code,
+          user_ou_map.ou_id as ou_id
       FROM
       (SELECT
         DATE(TIMESTAMP_MICROS(A.activity_timestamp)) as dates_for_calc
@@ -42,6 +44,14 @@ view: customer_daily_active_users_new  {
       GROUP BY 1, 2 , 3
       ) AS customer_dummy_data
       ON (DATE_DIFF(customer_date.dates_for_calc, DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)), DAY)<7) AND (DATE_DIFF(customer_date.dates_for_calc, DATE(TIMESTAMP_MICROS(customer_dummy_data.activity_timestamp)), DAY)>=0)
+      LEFT OUTER JOIN
+      (
+      SELECT C.country_code, C.ou_id
+      FROM
+      `bip-insights.looker_poc.user_id_map` AS C
+      GROUP BY 1, 2
+      ) AS user_ou_map
+      ON user_ou_map.gaia_id = customer_dummy_data.gaia_id
           ;;
   }
   dimension: date_range_activity {
