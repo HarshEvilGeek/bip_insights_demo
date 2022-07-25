@@ -78,4 +78,13 @@ view: customer_daily_active_users_new  {
     sql: ${TABLE}.gaia_id ;;
   }
 
+  dimension: country_code {
+    map_layer_name: countries
+    sql: ${TABLE}.country_code ;;
+  }
+
+  dimension: ou_id {
+    type: string
+    sql: ${TABLE}.ou_id ;;
+  }
 }
