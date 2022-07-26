@@ -1,5 +1,12 @@
+include: "/views/customer_30_daily_active_user_normalized.view.lkml"
 # Un-hide and use this explore, or copy the joins into another explore, to get all the fully nested relationships from this view
 explore: customer_7_daily_active_users_normalized {
+  join: customer_30_daily_active_users_normalized {
+    view_label: "Customer Dummy Data: 30 day"
+    sql_on: ${customer_7_daily_active_users_normalized.date_range_activity} = ${customer_30_daily_active_users_normalized.date_range_activity}} AND ${customer_7_daily_active_users_normalized.product} = ${customer_30_daily_active_users_normalized.product} ;;
+    relationship: many_to_one
+  }
+
 }
 
 
