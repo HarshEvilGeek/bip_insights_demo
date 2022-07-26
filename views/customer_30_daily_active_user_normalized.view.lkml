@@ -8,7 +8,7 @@ view: customer_30_daily_active_users_normalized  {
     sql: SELECT
           customer_date.dates_for_calc as date_range_activity,
           customer_dummy_data.product as product,
-          COUNT( DISTINCT customer_dummy_data.gaia_id) as count_dist_gaia_id
+          COUNT(DISTINCT customer_dummy_data.gaia_id) as count_dist_gaia_id
       FROM
       (SELECT
         DATE(TIMESTAMP_MICROS(A.activity_timestamp)) as dates_for_calc
