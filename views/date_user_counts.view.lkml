@@ -1,5 +1,4 @@
-explore: date_user_counts {
-}
+
 # The name of this view in Looker is "Date User Counts"
 view: date_user_counts {
   # The sql_table_name parameter indicates the underlying database table

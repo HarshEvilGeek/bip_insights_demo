@@ -1,5 +1,5 @@
 # Un-hide and use this explore, or copy the joins into another explore, to get all the fully nested relationships from this view
-explore: customer_dummy_data_1 {
+explore: customer_dummy_data_raw {
   view_name: customer_dummy_data
   join: customer_dummy_data__product {
     view_label: "Customer Dummy Data: Product"
@@ -14,16 +14,6 @@ explore: customer_dummy_data_1 {
   }
 }
 
-explore: customer_daily_active_users {
-  view_name: customer_dummy_data
-  fields: [customer_dummy_data.gaia_id, customer_dummy_data.activity_date]
-  join: customer_B {
-    from: customer_dummy_data
-    type: inner
-    relationship: one_to_many
-    sql_on: DATE_DIFF(${customer_dummy_data.activity_date},${customer_B.activity_date}, DAY)<2 AND DATE_DIFF(${customer_dummy_data.activity_date}, ${customer_B.activity_date}, DAY)>=0 AND ${customer_B.gaia_id}=${customer_dummy_data.gaia_id};;
-  }
-}
 
 # view: customer_daily_active_users_new  {
 #   derived_table: {
