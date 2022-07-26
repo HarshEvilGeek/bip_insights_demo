@@ -83,4 +83,10 @@ view: customer_daily_active_users_new  {
     type: string
     sql: ${TABLE}.ou_id ;;
   }
+
+  dimension: total_count_gaia_id {
+    type: number
+    sql: ${TABLE}.total_count_gaia_id ;;
+  }
+
 }
