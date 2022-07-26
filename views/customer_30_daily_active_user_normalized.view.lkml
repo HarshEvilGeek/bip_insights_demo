@@ -42,10 +42,10 @@ view: customer_30_daily_active_users_normalized  {
     sql: ${TABLE}.product ;;
   }
 
-  dimension: gaia_id {
+  dimension: count_dist_gaia_id {
     type: number
     # drill_fields: []
-    sql: ${TABLE}.gaia_id ;;
+    sql: ${TABLE}.count_dist_gaia_id ;;
   }
 
 
