@@ -1,21 +1,7 @@
-include: "/views/user_id_map.view"
 # Un-hide and use this explore, or copy the joins into another explore, to get all the fully nested relationships from this view
 explore: customer_daily_active_users_new {
-  join: user_id_map {
-    type: inner
-    relationship: many_to_one
-    sql_on: ${user_id_map.gaia_id} = ${customer_daily_active_users_new.gaia_id} ;;
-  }
 }
 
-explore: customer_daily_active_users_drill_down {
-  view_name: customer_daily_active_users_new
-  join: user_id_map {
-    type: inner
-    relationship: many_to_one
-    sql_on: ${user_id_map.gaia_id} = ${customer_daily_active_users_new.gaia_id} ;;
-  }
-}
 
 view: customer_daily_active_users_new  {
   derived_table: {
@@ -24,7 +10,8 @@ view: customer_daily_active_users_new  {
           customer_dummy_data.product as product,
           customer_dummy_data.gaia_id as gaia_id,
           user_ou_map.country_code as country_code,
-          user_ou_map.ou_id as ou_id
+          user_ou_map.ou_id as ou_id,
+          date_user_counts.count_gaia_id as total_count_gaia_id
       FROM
       (SELECT
         DATE(TIMESTAMP_MICROS(A.activity_timestamp)) as dates_for_calc
@@ -52,6 +39,15 @@ view: customer_daily_active_users_new  {
       GROUP BY 1, 2, 3
       ) AS user_ou_map
       ON user_ou_map.gaia_id = customer_dummy_data.gaia_id
+      INNER JOIN
+      (
+      SELECT D.date, D.count_gaia_id
+      FROM
+      `bip-insights.looker_poc.DateUserCounts` AS D
+      WHERE D.date is not NULL
+      GROUP BY 1, 2
+      ) AS date_user_counts
+      ON date_user_counts.date = customer_date.dates_for_calc
           ;;
   }
   dimension: date_range_activity {
