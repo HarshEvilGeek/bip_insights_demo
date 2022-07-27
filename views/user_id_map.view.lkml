@@ -1,3 +1,4 @@
+explore: user_id_map {}
 # The name of this view in Looker is "User ID Map"
 view: user_id_map {
   # The sql_table_name parameter indicates the underlying database table
